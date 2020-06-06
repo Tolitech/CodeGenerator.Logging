@@ -58,7 +58,9 @@ namespace Tolitech.CodeGenerator.Logging
                     {
                         info.StateProperties[item.Key] = item.Value;
 
-                        if (item.Key == "sql")
+                        if (item.Key == "methodName")
+                            info.MethodName = item.Value.ToString();
+                        else if (item.Key == "sql")
                             info.Sql = item.Value.ToString();
                         else if (item.Key == "sqlParam")
                             info.SqlParam = item.Value.ToString();

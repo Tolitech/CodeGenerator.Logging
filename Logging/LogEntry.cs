@@ -48,6 +48,8 @@ namespace Tolitech.CodeGenerator.Logging
 
         public string RequestPath { get; set; }
 
+        public string MethodName { get; set; }
+
         public string Sql { get; set; }
 
         public string SqlParam { get; set; }
