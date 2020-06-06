@@ -33,7 +33,27 @@ namespace Tolitech.CodeGenerator.Logging
         public object State { get; set; }
         
         public string StateText { get; set; }
-        
+
+        public string ActivityId { get; set; }
+
+        public string UserId { get; set; }
+
+        public string LoginName { get; set; }
+
+        public string ActionId { get; set; }
+
+        public string ActionName { get; set; }
+
+        public string RequestId { get; set; }
+
+        public string RequestPath { get; set; }
+
+        public string Sql { get; set; }
+
+        public string SqlParam { get; set; }
+
+        public string OriginalProperties { get; set; }
+
         public Dictionary<string, object> StateProperties { get; set; }
         
         public List<LogScopeInfo> Scopes { get; set; }

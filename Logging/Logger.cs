@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace Tolitech.CodeGenerator.Logging
@@ -34,6 +36,16 @@ namespace Tolitech.CodeGenerator.Logging
                 info.EventId = eventId;
                 info.State = state;
 
+                if (Activity.Current != null)
+                {
+                    var userIdTag = Activity.Current.Tags.FirstOrDefault(x => x.Key == "UserId");
+                    var usernameTag = Activity.Current.Tags.FirstOrDefault(x => x.Key == "Username");
+
+                    info.ActivityId = Activity.Current.RootId;
+                    info.UserId = userIdTag.Value;
+                    info.LoginName = usernameTag.Value;
+                }
+
                 if (state is string)
                 {
                     info.StateText = state.ToString();
@@ -45,7 +57,14 @@ namespace Tolitech.CodeGenerator.Logging
                     foreach (KeyValuePair<string, object> item in Properties)
                     {
                         info.StateProperties[item.Key] = item.Value;
+
+                        if (item.Key == "sql")
+                            info.Sql = item.Value.ToString();
+                        else if (item.Key == "sqlParam")
+                            info.SqlParam = item.Value.ToString();
                     }
+
+                    info.OriginalProperties = Properties.ToString();
                 }
 
                 if (Provider.ScopeProvider != null)
@@ -70,6 +89,15 @@ namespace Tolitech.CodeGenerator.Logging
                             foreach (var pair in props)
                             {
                                 Scope.Properties[pair.Key] = pair.Value;
+
+                                if (pair.Key == "ActionId")
+                                    info.ActionId = pair.Value.ToString();
+                                else if (pair.Key == "ActionName")
+                                    info.ActionName = pair.Value.ToString();
+                                else if (pair.Key == "RequestId")
+                                    info.RequestId = pair.Value.ToString();
+                                else if (pair.Key == "RequestPath")
+                                    info.RequestPath = pair.Value.ToString();
                             }
                         }
                     },
