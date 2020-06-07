@@ -6,8 +6,8 @@ namespace Tolitech.CodeGenerator.Logging
 {
     public abstract class LoggerProvider : IDisposable, ILoggerProvider, ISupportExternalScope
     {
-        ConcurrentDictionary<string, Logger> loggers = new ConcurrentDictionary<string, Logger>();
-        IExternalScopeProvider fScopeProvider;
+        private ConcurrentDictionary<string, Logger> loggers = new ConcurrentDictionary<string, Logger>();
+        private IExternalScopeProvider fScopeProvider;
         protected IDisposable SettingsChangeToken;
 
         void ISupportExternalScope.SetScopeProvider(IExternalScopeProvider scopeProvider)

@@ -76,21 +76,21 @@ namespace Tolitech.CodeGenerator.Logging
                         if (info.Scopes == null)
                             info.Scopes = new List<LogScopeInfo>();
 
-                        LogScopeInfo Scope = new LogScopeInfo();
-                        info.Scopes.Add(Scope);
+                        LogScopeInfo scope = new LogScopeInfo();
+                        info.Scopes.Add(scope);
 
                         if (value is string)
                         {
-                            Scope.Text = value.ToString();
+                            scope.Text = value.ToString();
                         }
                         else if (value is IEnumerable<KeyValuePair<string, object>> props)
                         {
-                            if (Scope.Properties == null)
-                                Scope.Properties = new Dictionary<string, object>();
+                            if (scope.Properties == null)
+                                scope.Properties = new Dictionary<string, object>();
 
                             foreach (var pair in props)
                             {
-                                Scope.Properties[pair.Key] = pair.Value;
+                                scope.Properties[pair.Key] = pair.Value;
 
                                 if (pair.Key == "ActionId")
                                     info.ActionId = pair.Value.ToString();
