@@ -52,7 +52,7 @@ namespace Tolitech.CodeGenerator.Logging
 
         public string Sql { get; set; }
 
-        public string Params { get; set; }
+        public string Parameters { get; set; }
 
         public string OriginalProperties { get; set; }
 
