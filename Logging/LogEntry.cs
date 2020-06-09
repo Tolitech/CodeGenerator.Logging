@@ -60,8 +60,6 @@ namespace Tolitech.CodeGenerator.Logging
 
         public string FilePath { get; set; }
 
-        public string MemberName { get; set; }
-
         public string LineNumber { get; set; }
     }
 }

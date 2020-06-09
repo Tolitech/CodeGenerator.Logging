@@ -58,13 +58,7 @@ namespace Tolitech.CodeGenerator.Logging
                     {
                         info.StateProperties[item.Key] = item.Value;
 
-                        if (item.Key == "filePath")
-                            info.FilePath = item.Value.ToString();
-                        else if (item.Key == "memberName")
-                            info.MemberName = item.Value.ToString();
-                        else if (item.Key == "lineNumber")
-                            info.LineNumber = item.Value.ToString();
-                        else if (item.Key == "sql")
+                        if (item.Key == "sql")
                             info.Sql = item.Value.ToString();
                         else if (item.Key == "parameters")
                             info.Parameters = item.Value.ToString();
@@ -108,6 +102,18 @@ namespace Tolitech.CodeGenerator.Logging
                         }
                     },
                     state);
+                }
+
+                var frame = new StackTrace(exception, true)
+                    .GetFrames()
+                    .Where(x => 
+                        !string.IsNullOrEmpty(x.GetFileName()))
+                    .FirstOrDefault();
+
+                if (frame != null)
+                {
+                    info.FilePath = frame.GetFileName();
+                    info.LineNumber = frame.GetFileLineNumber().ToString();
                 }
 
                 Provider.WriteLog(info);
