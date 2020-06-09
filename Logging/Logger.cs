@@ -58,8 +58,12 @@ namespace Tolitech.CodeGenerator.Logging
                     {
                         info.StateProperties[item.Key] = item.Value;
 
-                        if (item.Key == "methodName")
-                            info.MethodName = item.Value.ToString();
+                        if (item.Key == "filePath")
+                            info.FilePath = item.Value.ToString();
+                        else if (item.Key == "memberName")
+                            info.MemberName = item.Value.ToString();
+                        else if (item.Key == "lineNumber")
+                            info.LineNumber = item.Value.ToString();
                         else if (item.Key == "sql")
                             info.Sql = item.Value.ToString();
                         else if (item.Key == "parameters")

@@ -48,8 +48,6 @@ namespace Tolitech.CodeGenerator.Logging
 
         public string RequestPath { get; set; }
 
-        public string MethodName { get; set; }
-
         public string Sql { get; set; }
 
         public string Parameters { get; set; }
@@ -59,5 +57,11 @@ namespace Tolitech.CodeGenerator.Logging
         public Dictionary<string, object> StateProperties { get; set; }
         
         public List<LogScopeInfo> Scopes { get; set; }
+
+        public string FilePath { get; set; }
+
+        public string MemberName { get; set; }
+
+        public string LineNumber { get; set; }
     }
 }
