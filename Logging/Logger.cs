@@ -104,6 +104,8 @@ namespace Tolitech.CodeGenerator.Logging
                     state);
                 }
 
+                info.FilePath = new List<string>();
+
                 var frames = new StackTrace(exception, true)
                     .GetFrames()
                     .Where(x => 
