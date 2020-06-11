@@ -58,8 +58,8 @@ namespace Tolitech.CodeGenerator.Logging
         
         public List<LogScopeInfo> Scopes { get; set; }
 
-        public string FilePath { get; set; }
+        public List<string> FilePath { get; set; }
 
-        public string LineNumber { get; set; }
+        public List<string> LineNumber { get; set; }
     }
 }
