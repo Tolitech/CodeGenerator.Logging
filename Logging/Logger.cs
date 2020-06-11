@@ -104,19 +104,22 @@ namespace Tolitech.CodeGenerator.Logging
                     state);
                 }
 
-                info.FilePath = new List<string>();
-                info.LineNumber = new List<string>();
-
-                var frames = new StackTrace(exception, true)
-                    .GetFrames()
-                    .Where(x => 
-                        !string.IsNullOrEmpty(x.GetFileName()))
-                    .ToList();
-
-                foreach (var frame in frames)
+                if (exception != null)
                 {
-                    info.FilePath.Add(frame.GetFileName());
-                    info.LineNumber.Add(frame.GetFileLineNumber().ToString());
+                    info.FilePath = new List<string>();
+                    info.LineNumber = new List<string>();
+
+                    var frames = new StackTrace(exception, true)
+                        .GetFrames()
+                        .Where(x =>
+                            !string.IsNullOrEmpty(x.GetFileName()))
+                        .ToList();
+
+                    foreach (var frame in frames)
+                    {
+                        info.FilePath.Add(frame.GetFileName());
+                        info.LineNumber.Add(frame.GetFileLineNumber().ToString());
+                    }
                 }
 
                 Provider.WriteLog(info);
