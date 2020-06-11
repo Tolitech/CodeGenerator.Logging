@@ -105,6 +105,7 @@ namespace Tolitech.CodeGenerator.Logging
                 }
 
                 info.FilePath = new List<string>();
+                info.LineNumber = new List<string>();
 
                 var frames = new StackTrace(exception, true)
                     .GetFrames()
