@@ -56,12 +56,12 @@ namespace Tolitech.CodeGenerator.Logging
 
                     foreach (KeyValuePair<string, object> item in Properties)
                     {
-                        info.StateProperties[item.Key] = item.Value;
-
                         if (item.Key == "sql")
                             info.Sql = item.Value.ToString();
                         else if (item.Key == "parameters")
                             info.Parameters = item.Value.ToString();
+                        else
+                            info.StateProperties[item.Key] = item.Value;
                     }
 
                     info.OriginalProperties = Properties.ToString();
@@ -88,8 +88,6 @@ namespace Tolitech.CodeGenerator.Logging
 
                             foreach (var pair in props)
                             {
-                                scope.Properties[pair.Key] = pair.Value;
-
                                 if (pair.Key == "ActionId")
                                     info.ActionId = pair.Value.ToString();
                                 else if (pair.Key == "ActionName")
@@ -98,6 +96,8 @@ namespace Tolitech.CodeGenerator.Logging
                                     info.RequestId = pair.Value.ToString();
                                 else if (pair.Key == "RequestPath")
                                     info.RequestPath = pair.Value.ToString();
+                                else
+                                    scope.Properties[pair.Key] = pair.Value;
                             }
                         }
                     },
