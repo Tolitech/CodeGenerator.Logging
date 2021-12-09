@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace Tolitech.CodeGenerator.Logging
 {
     internal class Logger : ILogger
     {
-        public Logger(LoggerProvider Provider, string Category)
+        public Logger(LoggerProvider provider, string category)
         {
-            this.Provider = Provider;
-            this.Category = Category;
+            this.Provider = provider;
+            this.Category = category;
         }
 
         IDisposable ILogger.BeginScope<TState>(TState state)
@@ -24,17 +22,19 @@ namespace Tolitech.CodeGenerator.Logging
             return Provider.IsEnabled(logLevel);
         }
 
-        void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception, string> formatter)
         {
             if ((this as ILogger).IsEnabled(logLevel))
             {
-                LogEntry info = new LogEntry();
-                info.Category = this.Category;
-                info.Level = logLevel;
-                info.Text = exception?.Message ?? state.ToString();
-                info.Exception = exception;
-                info.EventId = eventId;
-                info.State = state;
+                LogEntry info = new()
+                {
+                    Category = this.Category,
+                    Level = logLevel,
+                    Text = exception?.Message ?? state?.ToString(),
+                    Exception = exception,
+                    EventId = eventId,
+                    State = state
+                };
 
                 if (Activity.Current != null)
                 {
@@ -48,7 +48,7 @@ namespace Tolitech.CodeGenerator.Logging
 
                 if (state is string)
                 {
-                    info.StateText = state.ToString();
+                    info.StateText = state?.ToString();
                 }
                 else if (state is IEnumerable<KeyValuePair<string, object>> Properties)
                 {
@@ -74,7 +74,7 @@ namespace Tolitech.CodeGenerator.Logging
                         if (info.Scopes == null)
                             info.Scopes = new List<LogScopeInfo>();
 
-                        LogScopeInfo scope = new LogScopeInfo();
+                        LogScopeInfo scope = new();
                         info.Scopes.Add(scope);
 
                         if (value is string)
@@ -117,8 +117,13 @@ namespace Tolitech.CodeGenerator.Logging
 
                     foreach (var frame in frames)
                     {
-                        info.FilePath.Add(frame.GetFileName());
-                        info.LineNumber.Add(frame.GetFileLineNumber().ToString());
+                        string? fileName = frame.GetFileName();
+
+                        if (!string.IsNullOrEmpty(fileName))
+                        {
+                            info.FilePath.Add(fileName);
+                            info.LineNumber.Add(frame.GetFileLineNumber().ToString());
+                        }
                     }
                 }
 
@@ -127,7 +132,7 @@ namespace Tolitech.CodeGenerator.Logging
         }
 
         public LoggerProvider Provider { get; private set; }
-        
+
         public string Category { get; private set; }
     }
 }
