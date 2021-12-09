@@ -11,11 +11,11 @@ namespace Tolitech.CodeGenerator.Logging
             UserName = Environment.UserName;
         }
 
-        static public readonly string StaticHostName = System.Net.Dns.GetHostName();
+        static private readonly string StaticHostName = System.Net.Dns.GetHostName();
 
         public string UserName { get; private set; }
 
-        public string HostName { get { return StaticHostName; } }
+        public static string HostName { get { return StaticHostName; } }
 
         public DateTime TimeStampUtc { get; private set; }
 
@@ -27,7 +27,7 @@ namespace Tolitech.CodeGenerator.Logging
 
         public Exception? Exception { get; set; }
 
-        public EventId EventId { get; set; }
+        public EventId? EventId { get; set; }
 
         public object? State { get; set; }
 

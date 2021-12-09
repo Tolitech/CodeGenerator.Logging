@@ -6,7 +6,7 @@ namespace Tolitech.CodeGenerator.Logging
 {
     public abstract class LoggerProvider : IDisposable, ILoggerProvider, ISupportExternalScope
     {
-        private ConcurrentDictionary<string, Logger> loggers = new ConcurrentDictionary<string, Logger>();
+        private readonly ConcurrentDictionary<string, Logger> loggers = new();
         private IExternalScopeProvider? fScopeProvider;
         
         protected IDisposable? SettingsChangeToken;
@@ -16,9 +16,9 @@ namespace Tolitech.CodeGenerator.Logging
             fScopeProvider = scopeProvider;
         }
 
-        ILogger ILoggerProvider.CreateLogger(string Category)
+        ILogger ILoggerProvider.CreateLogger(string category)
         {
-            return loggers.GetOrAdd(Category, (category) => { return new Logger(this, category); });
+            return loggers.GetOrAdd(category, (category) => { return new Logger(this, category); });
         }
 
         void IDisposable.Dispose()

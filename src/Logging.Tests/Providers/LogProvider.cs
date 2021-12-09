@@ -40,7 +40,7 @@ namespace Tolitech.CodeGenerator.Logging.Tests.Providers
             Console.WriteLine($"TimeStampUtc = {Info.TimeStampUtc}");
             Console.WriteLine($"UserId = {Info.UserId}");
             Console.WriteLine($"UserName = {Info.UserName}");
-            Console.WriteLine($"HostName = {Info.HostName}");
+            Console.WriteLine($"HostName = {LogEntry.HostName}");
         }
     }
 }

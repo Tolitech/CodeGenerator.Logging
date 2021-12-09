@@ -6,10 +6,10 @@ namespace Tolitech.CodeGenerator.Logging
 {
     internal class Logger : ILogger
     {
-        public Logger(LoggerProvider Provider, string Category)
+        public Logger(LoggerProvider provider, string category)
         {
-            this.Provider = Provider;
-            this.Category = Category;
+            this.Provider = provider;
+            this.Category = category;
         }
 
         IDisposable ILogger.BeginScope<TState>(TState state)
@@ -26,13 +26,15 @@ namespace Tolitech.CodeGenerator.Logging
         {
             if ((this as ILogger).IsEnabled(logLevel))
             {
-                LogEntry info = new LogEntry();
-                info.Category = this.Category;
-                info.Level = logLevel;
-                info.Text = exception?.Message ?? state?.ToString();
-                info.Exception = exception;
-                info.EventId = eventId;
-                info.State = state;
+                LogEntry info = new()
+                {
+                    Category = this.Category,
+                    Level = logLevel,
+                    Text = exception?.Message ?? state?.ToString(),
+                    Exception = exception,
+                    EventId = eventId,
+                    State = state
+                };
 
                 if (Activity.Current != null)
                 {
@@ -72,7 +74,7 @@ namespace Tolitech.CodeGenerator.Logging
                         if (info.Scopes == null)
                             info.Scopes = new List<LogScopeInfo>();
 
-                        LogScopeInfo scope = new LogScopeInfo();
+                        LogScopeInfo scope = new();
                         info.Scopes.Add(scope);
 
                         if (value is string)
