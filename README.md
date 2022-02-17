@@ -1,4 +1,4 @@
-# Logging
+# Tolitech.CodeGenerator.Logging
 Logging library used in projects created by the Code Generator tool.
 
 This project contains abstract classes for implementing and customizing logging providers. 
